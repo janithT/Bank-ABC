@@ -45,15 +45,9 @@
                 <hr>
 
                 <div class="field is-form-action-buttons">
-                    <button type="submit" class="button is-black">
+                    <button type="submit" class="button is-link is-outlined">
                         {{ __('Login') }}
                     </button>
-
-                    @if (Route::has('password.request'))
-                        <a class="button is-black is-outlined" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
                 </div>
             </form>
         @endcomponent
