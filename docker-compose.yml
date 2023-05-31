@@ -1,0 +1,22 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+    - "3300:80"
+    volumes: 
+    - ./:/var/www
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+  db:
+    image: mysql:5.7
+    volumes:
+    - ./storage/db:/var/lib/mysql
+    ports:
+    - 33306:3306
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: bankabc
+        

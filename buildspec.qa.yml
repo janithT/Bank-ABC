@@ -1,0 +1,19 @@
+version: 0.2  
+phases:
+  install:
+    commands:
+     - echo Entered the install phase...
+     - aws s3 cp s3://bucket-name/.env.staging .env --region=us-east-1
+     - eval $(aws ecr get-login --no-include-email)
+  build:
+    commands:
+      - echo Entered the build phase...
+      - docker-compose up -d
+  post_build:
+    commands:
+      - echo Entered the post_build phase...
+      - docker tag src_app:latest 2222222222.dkr.ecr.us-east-1.amazonaws.com/abc-qa-app:latest
+      - docker push 2222222222.dkr.ecr.us-east-1.amazonaws.com/abc-qa-app:latest
+      - printf '[{"name":"abc-qa-app","imageUri":"2222222222.dkr.ecr.us-east-1.amazonaws.com/abc-qa-app:latest"}]' > imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
