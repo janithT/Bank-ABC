@@ -29,7 +29,7 @@ Route::group([
 });
 
 // API Routes
-Route::group(['middleware' => 'auth.jwt'], function ($router) {
+Route::group(['middleware' => 'auth-bank'], function ($router) {
 // Insert API routes here
 
     Route::prefix('/transactions')->group(function () {

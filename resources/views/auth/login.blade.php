@@ -48,6 +48,15 @@
                     <button type="submit" class="button is-link is-outlined">
                         {{ __('Login') }}
                     </button>
+                    <button type="submit" class="button is-link is-outlined"  >
+                        {{ __('Register') }}
+                    </button>
+
+                    @if (Route::has('password.request'))
+                        <a class="is-link is-outlined" style="float:right" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
                 </div>
             </form>
         @endcomponent

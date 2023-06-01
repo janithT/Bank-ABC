@@ -4,7 +4,7 @@
     <hero-bar>
       Profile
       <router-link slot="right" to="/" class="button">
-        Dashboard
+        Home
       </router-link>
     </hero-bar>
     <section class="section is-main-section">
@@ -30,7 +30,7 @@ import { mapState } from 'vuex'
 import CardComponent from '@/components/CardComponent'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
-import ProfileUpdateForm from '@/components/ProfileUpdateForm'
+import ProfileUpdateForm from '@/views/forms/ProfileUpdateForm'
 import PasswordUpdateForm from '@/auth/PasswordUpdateForm'
 import Tiles from '@/components/Tiles'
 import UserAvatar from '@/components/UserAvatar'

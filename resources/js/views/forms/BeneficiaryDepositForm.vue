@@ -1,5 +1,7 @@
 <template>
   <card-component title="Beneficiary Deposits" icon="account-circle">
+
+    <!-- Start beneficiary deposits user form -->
     <form @submit.prevent="submit">
       <b-field grouped>
         <b-field expanded label="Your Account *" :message="formAccountNumberMessage" :type="formAccountNumberType">
@@ -34,6 +36,7 @@
         </div>
       </b-field>
     </form>
+    <!-- End beneficiary deposits user form -->
   </card-component>
 </template>
 
@@ -126,7 +129,10 @@ export default {
       };
     },
 
-    // form submit for beneficiary transfer
+    /**
+     * Submit for beneficiary transfer
+     *  
+     */ 
     submit() {
       this.isLoading = true;
       this.errors = {};
@@ -171,9 +177,6 @@ export default {
             })
           })
         })
-        // .finally(()=>{
-        //   this.form = this.getClearFormObject();
-        // })
     }
   },
   watch: {
