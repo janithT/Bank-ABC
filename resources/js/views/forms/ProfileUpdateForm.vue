@@ -1,9 +1,8 @@
 <template>
   <card-component title="Edit Profile" icon="account-circle">
+
+    <!-- Start user profile update form -->
     <form @submit.prevent="submit">
-      <!-- <b-field horizontal label="Avatar">
-        <file-picker @file-stored="fileStored"/>
-      </b-field> -->
       <hr>
       <b-field horizontal label="Name" :message="formNameMessage" :type="formNameType">
         <b-input v-model="form.name" name="name" required/>
@@ -21,6 +20,7 @@
         </div>
       </b-field>
     </form>
+    <!-- End user profile update form -->
   </card-component>
 </template>
 

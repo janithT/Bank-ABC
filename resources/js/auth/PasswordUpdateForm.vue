@@ -1,5 +1,7 @@
 <template>
   <card-component title="Change Password" icon="lock">
+
+    <!-- Start password update user form -->
     <form @submit.prevent="submit">
       <b-field horizontal label="Current password" :message="formPasswordCurrentMessage" :type="formPasswordCurrentType">
         <b-input name="password_current" type="password" v-model="form.password_current" required autcomplete="current-password"/>
@@ -14,12 +16,13 @@
       <hr>
       <b-field horizontal>
         <div class="control">
-          <button type="submit" class="button is-primary" :class="{'is-loading':isLoading}">
+          <button type="submit" class="button is-success" :class="{'is-loading':isLoading}">
             Submit
           </button>
         </div>
       </b-field>
     </form>
+    <!-- End password update user form -->
   </card-component>
 </template>
 
@@ -58,6 +61,11 @@ export default {
     },
   },
   methods: {
+
+    /**
+     * 
+     * Submit the User password update
+     */
     submit () {
       this.isLoading = true
       this.errors = {}

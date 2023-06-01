@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ * This file is not completed yet. this is for API testing and API documentation purposes.
+ */
+
 namespace App\Http\Controllers;
 
 use App\User;

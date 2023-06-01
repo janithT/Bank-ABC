@@ -1,17 +1,24 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/auth/PasswordUpdateForm.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/auth/PasswordUpdateForm.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/BeneficiaryTransfers.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/BeneficiaryTransfers.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/each */ "./node_modules/lodash/each.js");
-/* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_each__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_CardComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/CardComponent */ "./resources/js/components/CardComponent.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _js_library_transactions_transactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../js/library/transactions/transactions */ "./resources/js/library/transactions/transactions.js");
+/* harmony import */ var _components_CardComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/CardComponent */ "./resources/js/components/CardComponent.vue");
+/* harmony import */ var _views_forms_BeneficiaryDepositForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/views/forms/BeneficiaryDepositForm */ "./resources/js/views/forms/BeneficiaryDepositForm.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -37,236 +44,106 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'PasswordUpdateForm',
+  name: 'Othertransfers',
   components: {
-    CardComponent: _components_CardComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
+    transactions: _js_library_transactions_transactions__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CardComponent: _components_CardComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
+    BeneficiaryDepositForm: _views_forms_BeneficiaryDepositForm__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
       isLoading: false,
-      errors: {},
-      form: {
-        password_current: null,
-        password: null,
-        password_confirmation: null
-      }
+      paginated: false,
+      perPage: 10,
+      transactions: [],
+      columns: [{
+        field: 'to_account',
+        label: 'Beneficiary Account Number',
+        searchable: 'searchable'
+      }, {
+        field: 'amount',
+        label: 'Deopsit Amount',
+        searchable: 'searchable'
+      }, {
+        field: 'debtor_comment',
+        label: 'Debtor Comment',
+        searchable: 'searchable'
+      }, {
+        field: 'type',
+        label: 'Type',
+        searchable: 'searchable'
+      }, {
+        field: 'created',
+        label: 'Debited Date',
+        searchable: 'searchable'
+      }]
     };
   },
-  computed: {
-    formPasswordCurrentType: function formPasswordCurrentType() {
-      return this.errors.password_current ? 'is-danger' : null;
-    },
-    formPasswordCurrentMessage: function formPasswordCurrentMessage() {
-      return this.errors.password_current ? this.errors.password_current[0] : 'Required. Your current password';
-    },
-    formPasswordType: function formPasswordType() {
-      return this.errors.password ? 'is-danger' : null;
-    },
-    formPasswordMessage: function formPasswordMessage() {
-      return this.errors.password ? this.errors.password[0] : 'Required. New password';
-    }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['userId', 'userAccount'])),
+  created: function created() {
+    this.getBeneficiaryTransactions();
   },
+  mounted: function mounted() {},
   methods: {
-    submit: function submit() {
+    getBeneficiaryTransactions: function getBeneficiaryTransactions() {
       var _this = this;
 
       this.isLoading = true;
-      this.errors = {};
-      axios.patch('/user/password', this.form).then(function (r) {
+      _js_library_transactions_transactions__WEBPACK_IMPORTED_MODULE_1__["default"].getBeneficiaryTransactionLogs().then(function (res) {
         _this.isLoading = false;
-        _this.form.password_current = null;
-        _this.form.password = null;
-        _this.form.password_confirmation = null;
 
-        _this.$buefy.snackbar.open({
-          message: 'Password updated',
-          duration: 1000,
-          queue: false
-        });
+        if (res.data && res.data.data) {
+          if (res.data.data.length > _this.perPage) {
+            _this.paginated = true;
+          }
+
+          _this.transactions = res.data.data;
+        }
       })["catch"](function (err) {
         _this.isLoading = false;
 
-        if (err.response.data.errors) {
-          _this.errors = err.response.data.errors;
-        } else {
-          _this.errors = {
-            _all: ['An error occurred']
-          };
-        }
-
-        lodash_each__WEBPACK_IMPORTED_MODULE_0___default()(_this.errors, function (err) {
-          _this.$buefy.toast.open({
-            message: err[0],
-            type: 'is-danger',
-            queue: false,
-            duration: 3000
-          });
+        _this.$buefy.toast.open({
+          message: "Error: ".concat(err.message),
+          type: "is-danger"
         });
       });
+    }
+  },
+  watch: {
+    userAccount: function userAccount(newValue) {
+      if (newValue) {
+        this.getBeneficiaryTransactions();
+      }
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilePicker.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FilePicker.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/each */ "./node_modules/lodash/each.js");
-/* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_each__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'FilePicker',
-  props: {
-    label: {
-      type: String,
-      "default": null
-    },
-    message: {
-      type: String,
-      "default": null
-    },
-    currentFile: {
-      "default": null
-    }
-  },
-  data: function data() {
-    return {
-      errors: {},
-      file: null,
-      uploadPercent: 0,
-      isUploadSuccess: false
-    };
-  },
-  computed: {
-    fieldFileMessage: function fieldFileMessage() {
-      if (this.errors.file) {
-        return this.errors.file[0];
-      }
-
-      if (this.isUploadSuccess) {
-        return 'File uploaded. Submit to store';
-      }
-
-      if (this.uploadPercent) {
-        return "Uploading ".concat(this.uploadPercent, "%");
-      }
-
-      return this.message;
-    },
-    uploadButtonText: function uploadButtonText() {
-      return this.fileName ? null : 'Pick a file';
-    },
-    uploadButtonIcon: function uploadButtonIcon() {
-      return this.fileName ? 'cloud-sync' : 'cloud-upload';
-    },
-    fieldFileType: function fieldFileType() {
-      return this.errors.file ? 'is-danger' : null;
-    },
-    fileName: function fileName() {
-      if (this.file) {
-        return this.file.name;
-      }
-
-      if (this.currentFile) {
-        return this.currentFile;
-      }
-
-      return null;
-    }
-  },
-  methods: {
-    upload: function upload(file) {
-      var _this = this;
-
-      this.errors = {};
-      var formData = new FormData();
-      formData.append('file', this.file);
-      this.isUploadSuccess = false;
-      axios.post('/files/store', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: this.progressEvent
-      }).then(function (r) {
-        _this.isUploadSuccess = true; // Display success data & then drop it after a little while
-        // setTimeout(() => {
-        //   this.file = null
-        //   this.isUploadSuccess = false
-        //   this.uploadPercent = 0
-        // }, 1500)
-
-        _this.$emit('file-updated', r.data.data);
-
-        _this.$emit('file-id-updated', r.data.data.id);
-      })["catch"](function (err) {
-        _this.file = null;
-        _this.uploadPercent = 0;
-
-        if (err.response.data.errors) {
-          _this.errors = err.response.data.errors;
-        } else {
-          _this.errors = {
-            _all: ['Upload error']
-          };
-        }
-
-        lodash_each__WEBPACK_IMPORTED_MODULE_0___default()(_this.errors, function (err) {
-          _this.$buefy.toast.open({
-            message: err[0],
-            type: 'is-danger',
-            queue: false
-          });
-        });
-      });
-    },
-    dropFile: function dropFile() {
-      this.file = null;
-      this.isUploadSuccess = false;
-      this.uploadPercent = 0;
-      this.$emit('file-updated', null);
-      this.$emit('file-id-updated', null);
-    },
-    progressEvent: function progressEvent(_progressEvent) {
-      this.uploadPercent = Math.round(_progressEvent.loaded * 100 / _progressEvent.total);
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileUpdateForm.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProfileUpdateForm.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -275,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash/each */ "./node_modules/lodash/each.js");
 /* harmony import */ var lodash_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_each__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _components_FilePicker__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/FilePicker */ "./resources/js/components/FilePicker.vue");
+/* harmony import */ var _library_transactions_transactions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../library/transactions/transactions */ "./resources/js/library/transactions/transactions.js");
 /* harmony import */ var _components_CardComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/CardComponent */ "./resources/js/components/CardComponent.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -309,78 +186,131 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'ProfileUpdateForm',
+  name: 'OtherDepositForm',
   components: {
-    CardComponent: _components_CardComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
-    FilePicker: _components_FilePicker__WEBPACK_IMPORTED_MODULE_2__["default"]
+    transactions: _library_transactions_transactions__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CardComponent: _components_CardComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
       isFileUploaded: false,
       isLoading: false,
       errors: {},
-      form: {
-        name: null,
-        email: null
-      }
+      form: this.getClearFormObject(),
+      readonly: true,
+      balence: null
     };
   },
   computed: _objectSpread({
-    formNameType: function formNameType() {
-      return this.errors.name ? 'is-danger' : null;
+    formAccountNumberType: function formAccountNumberType() {
+      return this.errors.account_number ? 'is-danger' : null;
     },
-    formNameMessage: function formNameMessage() {
-      return this.errors.name ? this.errors.name[0] : 'Required. Your name';
+    formAccountNumberMessage: function formAccountNumberMessage() {
+      return this.errors.account_number ? this.errors.account_number[0] : 'Required. Your account number';
     },
-    formEmailType: function formEmailType() {
-      return this.errors.email ? 'is-danger' : null;
+    formBeneficiaryAccountNumberType: function formBeneficiaryAccountNumberType() {
+      return this.errors.beneficiary_account_number ? 'is-danger' : null;
     },
-    formEmailMessage: function formEmailMessage() {
-      return this.errors.email ? this.errors.email[0] : 'Required. Your e-mail';
+    formBeneficiaryAccountNumberMessage: function formBeneficiaryAccountNumberMessage() {
+      return this.errors.beneficiary_account_number ? this.errors.beneficiary_account_number[0] : 'Required. Beneficiary account number';
     },
-    formPhoneType: function formPhoneType() {
-      return this.errors.phone ? 'is-danger' : null;
+    formBeneficiaryNameType: function formBeneficiaryNameType() {
+      return this.errors.beneficiary_name ? 'is-danger' : null;
     },
-    formPhoneMessage: function formPhoneMessage() {
-      return this.errors.phone ? this.errors.phone[0] : 'Required. Your Phone';
+    formBeneficiaryNameMessage: function formBeneficiaryNameMessage() {
+      return this.errors.beneficiary_name ? this.errors.beneficiary_name[0] : 'Required. Beneficiary account number';
+    },
+    formAmountType: function formAmountType() {
+      return this.errors.beneficiary_amount ? 'is-danger' : null;
+    },
+    formAmountMessage: function formAmountMessage() {
+      return this.errors.beneficiary_amount ? this.errors.beneficiary_amount[0] : 'Required. Transfer amount';
+    },
+    formCommentType: function formCommentType() {
+      return this.errors.debtor_comment ? 'is-danger' : null;
+    },
+    formCommentMessage: function formCommentMessage() {
+      return this.errors.debtor_comment ? this.errors.debtor_comment[0] : 'Required. Your debtor comment';
+    },
+    formBeneficiaryCommentType: function formBeneficiaryCommentType() {
+      return this.errors.beneficiary_comment ? 'is-danger' : null;
+    },
+    formBeneficiaryCommentMessage: function formBeneficiaryCommentMessage() {
+      return this.errors.beneficiary_comment ? this.errors.beneficiary_comment[0] : 'Required. Your debtor comment';
     }
-  }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['userName', 'userEmail', 'phone'])),
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['userId', 'userAccount', 'userBalence'])),
   mounted: function mounted() {
-    this.form.name = this.userName;
-    this.form.email = this.userEmail;
-    this.form.phone = this.phone;
+    // map state value to the varibale
+    this.form.account_number = this.userAccount;
+    this.form.user_id = this.userId;
+    this.balence = this.userBalence;
   },
   methods: {
-    fileStored: function fileStored(file) {
-      this.isFileUploaded = true;
-      this.form.file_id = file.id;
+    // default form data.
+    getClearFormObject: function getClearFormObject() {
+      return {
+        user_id: this.userId,
+        account_number: this.userAccount,
+        beneficiary_account_number: null,
+        beneficiary_amount: null,
+        debtor_comment: null
+      };
+    },
 
-      if (this.form.name && this.form.email) {
-        this.submit();
-      }
-    },
-    emitIsForbidden: function emitIsForbidden() {
-      this.$emit('is-forbidden');
-    },
+    /**
+     * Submit for beneficiary transfer
+     *  
+     */
     submit: function submit() {
       var _this = this;
 
-      this.isFileUploaded = false;
       this.isLoading = true;
-      this.errors = {};
-      axios.patch('/user', this.form).then(function (r) {
+      this.errors = {}; // Check if same account number
+
+      if (this.form.account_number == this.form.beneficiary_account_number) {
+        this.isLoading = false;
+        this.$buefy.toast.open({
+          message: "Account number and beneficiary ammount should be diffrent",
+          type: "is-warning"
+        });
+        return;
+      }
+
+      _library_transactions_transactions__WEBPACK_IMPORTED_MODULE_2__["default"].addBeneficiaryTransaction(this.form).then(function (res) {
+        var _res$data = res.data,
+            status = _res$data.status,
+            message = _res$data.message;
         _this.isLoading = false;
 
-        _this.$store.commit('user', r.data.data);
+        _this.$store.commit('user', res.data.data);
+
+        _this.$emit('transaction-completed');
+
+        _this.form = _this.getClearFormObject();
 
         _this.$buefy.snackbar.open({
-          message: 'Profile updated',
-          duration: 1000,
+          message: message,
           queue: false
         });
       })["catch"](function (err) {
@@ -388,14 +318,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         if (err.response.data.errors) {
           _this.errors = err.response.data.errors;
-        } else if (err.response.status === 403) {
-          _this.$emit('is-forbidden');
-
-          _this.errors = {
-            _all: ['Forbidden with demo account']
-          };
         } else {
-          console.error(err.response);
           _this.errors = {
             _all: ['An error occurred']
           };
@@ -405,102 +328,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$buefy.toast.open({
             message: err[0],
             type: 'is-danger',
-            queue: false,
-            duration: 3000
+            queue: false
           });
         });
       });
     }
   },
   watch: {
-    userName: function userName(newValue) {
-      this.form.name = newValue;
+    userId: function userId(newValue) {
+      this.form.user_id = newValue;
     },
-    userEmail: function userEmail(newValue) {
-      this.form.email = newValue;
+    userAccount: function userAccount(newValue) {
+      this.form.account_number = newValue;
     },
-    phone: function phone(newValue) {
-      this.form.phone = newValue;
+    userBalence: function userBalence(newValue) {
+      this.balence = newValue;
     }
   }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Profile.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Profile.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _components_CardComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/CardComponent */ "./resources/js/components/CardComponent.vue");
-/* harmony import */ var _components_TitleBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/TitleBar */ "./resources/js/components/TitleBar.vue");
-/* harmony import */ var _components_HeroBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/HeroBar */ "./resources/js/components/HeroBar.vue");
-/* harmony import */ var _components_ProfileUpdateForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/components/ProfileUpdateForm */ "./resources/js/components/ProfileUpdateForm.vue");
-/* harmony import */ var _auth_PasswordUpdateForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/auth/PasswordUpdateForm */ "./resources/js/auth/PasswordUpdateForm.vue");
-/* harmony import */ var _components_Tiles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/components/Tiles */ "./resources/js/components/Tiles.vue");
-/* harmony import */ var _components_UserAvatar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/components/UserAvatar */ "./resources/js/components/UserAvatar.vue");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Profile',
-  components: {
-    UserAvatar: _components_UserAvatar__WEBPACK_IMPORTED_MODULE_7__["default"],
-    Tiles: _components_Tiles__WEBPACK_IMPORTED_MODULE_6__["default"],
-    PasswordUpdateForm: _auth_PasswordUpdateForm__WEBPACK_IMPORTED_MODULE_5__["default"],
-    ProfileUpdateForm: _components_ProfileUpdateForm__WEBPACK_IMPORTED_MODULE_4__["default"],
-    HeroBar: _components_HeroBar__WEBPACK_IMPORTED_MODULE_3__["default"],
-    TitleBar: _components_TitleBar__WEBPACK_IMPORTED_MODULE_2__["default"],
-    CardComponent: _components_CardComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  computed: _objectSpread({
-    titleStack: function titleStack() {
-      return ['Admin', 'Profile'];
-    }
-  }, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['userName', 'userEmail']))
 });
 
 /***/ }),
@@ -627,10 +471,10 @@ module.exports = forEach;
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/auth/PasswordUpdateForm.vue?vue&type=template&id=06956081&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/auth/PasswordUpdateForm.vue?vue&type=template&id=06956081& ***!
-  \***************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2& ***!
+  \******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -643,223 +487,87 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "card-component",
-    { attrs: { title: "Change Password", icon: "lock" } },
+    "section",
+    { staticClass: "section is-main-section" },
     [
+      _c("beneficiary-deposit-form", {
+        staticClass: "tile is-child",
+        on: { "transaction-completed": _vm.getBeneficiaryTransactions }
+      }),
+      _vm._v(" "),
       _c(
-        "form",
+        "card-component",
         {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.submit($event)
-            }
-          }
+          staticClass: "tile is-child",
+          attrs: { title: "Debit History", icon: "account" }
         },
         [
           _c(
-            "b-field",
+            "b-table",
             {
               attrs: {
-                horizontal: "",
-                label: "Current password",
-                message: _vm.formPasswordCurrentMessage,
-                type: _vm.formPasswordCurrentType
+                data: _vm.transactions,
+                "per-page": _vm.perPage,
+                loading: _vm.isLoading,
+                columns: _vm.columns,
+                striped: true,
+                hoverable: true,
+                paginated: _vm.paginated
               }
             },
             [
-              _c("b-input", {
-                attrs: {
-                  name: "password_current",
-                  type: "password",
-                  required: "",
-                  autcomplete: "current-password"
-                },
-                model: {
-                  value: _vm.form.password_current,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "password_current", $$v)
-                  },
-                  expression: "form.password_current"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c(
-            "b-field",
-            {
-              attrs: {
-                horizontal: "",
-                label: "New password",
-                message: _vm.formPasswordMessage,
-                type: _vm.formPasswordType
-              }
-            },
-            [
-              _c("b-input", {
-                attrs: {
-                  name: "password",
-                  type: "password",
-                  required: "",
-                  autocomplete: "new-password"
-                },
-                model: {
-                  value: _vm.form.password,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "password", $$v)
-                  },
-                  expression: "form.password"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "b-field",
-            {
-              attrs: {
-                horizontal: "",
-                label: "New password (confirm)",
-                message: "Required. New password one more time"
-              }
-            },
-            [
-              _c("b-input", {
-                attrs: {
-                  name: "password_confirmation",
-                  type: "password",
-                  required: "",
-                  autocomplete: "new-password"
-                },
-                model: {
-                  value: _vm.form.password_confirmation,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "password_confirmation", $$v)
-                  },
-                  expression: "form.password_confirmation"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("b-field", { attrs: { horizontal: "" } }, [
-            _c("div", { staticClass: "control" }, [
               _c(
-                "button",
+                "section",
                 {
-                  staticClass: "button is-primary",
-                  class: { "is-loading": _vm.isLoading },
-                  attrs: { type: "submit" }
+                  staticClass: "section",
+                  attrs: { slot: "empty" },
+                  slot: "empty"
                 },
-                [_vm._v("\n          Submit\n        ")]
-              )
-            ])
-          ])
-        ],
-        1
-      )
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilePicker.vue?vue&type=template&id=7d05e4d5&":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FilePicker.vue?vue&type=template&id=7d05e4d5& ***!
-  \*************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "b-field",
-    {
-      attrs: {
-        label: _vm.label,
-        message: _vm.fieldFileMessage,
-        type: _vm.fieldFileType
-      }
-    },
-    [
-      _c(
-        "b-field",
-        [
-          _c(
-            "b-upload",
-            {
-              on: { input: _vm.upload },
-              model: {
-                value: _vm.file,
-                callback: function($$v) {
-                  _vm.file = $$v
-                },
-                expression: "file"
-              }
-            },
-            [
-              _c(
-                "a",
-                { staticClass: "button is-primary" },
                 [
-                  _c("b-icon", {
-                    attrs: {
-                      icon: _vm.uploadButtonIcon,
-                      "custom-size": "default"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.uploadButtonText
-                    ? _c("span", [_vm._v(_vm._s(_vm.uploadButtonText))])
-                    : _vm._e()
-                ],
-                1
+                  _c(
+                    "div",
+                    { staticClass: "content has-text-grey has-text-centered" },
+                    [
+                      _vm.isLoading
+                        ? [
+                            _c(
+                              "p",
+                              [
+                                _c("b-icon", {
+                                  attrs: {
+                                    icon: "dots-horizontal",
+                                    size: "is-large"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("p", [_vm._v("Fetching data...")])
+                          ]
+                        : [
+                            _c(
+                              "p",
+                              [
+                                _c("b-icon", {
+                                  attrs: {
+                                    icon: "emoticon-sad",
+                                    size: "is-large"
+                                  }
+                                })
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c("p", [_vm._v("Nothing's here…")])
+                          ]
+                    ],
+                    2
+                  )
+                ]
               )
             ]
-          ),
-          _vm._v(" "),
-          _vm.fileName
-            ? _c("div", { staticClass: "control" }, [
-                _c(
-                  "a",
-                  { staticClass: "button is-static is-file-upload-label" },
-                  [
-                    _c("span", { attrs: { title: _vm.fileName } }, [
-                      _vm._v(_vm._s(_vm.fileName))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", {
-                      staticClass: "delete",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.dropFile($event)
-                        }
-                      }
-                    })
-                  ]
-                )
-              ])
-            : _vm._e()
+          )
         ],
         1
       )
@@ -874,10 +582,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileUpdateForm.vue?vue&type=template&id=5aad544a&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProfileUpdateForm.vue?vue&type=template&id=5aad544a& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c& ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -891,7 +599,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "card-component",
-    { attrs: { title: "Edit Profile", icon: "account-circle" } },
+    { attrs: { title: "Beneficiary Deposits", icon: "account-circle" } },
     [
       _c(
         "form",
@@ -904,61 +612,196 @@ var render = function() {
           }
         },
         [
-          _c("hr"),
-          _vm._v(" "),
           _c(
             "b-field",
-            {
-              attrs: {
-                horizontal: "",
-                label: "Name",
-                message: _vm.formNameMessage,
-                type: _vm.formNameType
-              }
-            },
+            { attrs: { grouped: "" } },
             [
-              _c("b-input", {
-                attrs: { name: "name", required: "" },
-                model: {
-                  value: _vm.form.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "name", $$v)
-                  },
-                  expression: "form.name"
-                }
-              })
+              _c(
+                "b-field",
+                {
+                  attrs: {
+                    expanded: "",
+                    label: "Your Account *",
+                    message: _vm.formAccountNumberMessage,
+                    type: _vm.formAccountNumberType
+                  }
+                },
+                [
+                  _c("b-input", {
+                    attrs: {
+                      max: "10",
+                      name: "account_number",
+                      required: "",
+                      readonly: _vm.readonly
+                    },
+                    model: {
+                      value: _vm.form.account_number,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "account_number", $$v)
+                      },
+                      expression: "form.account_number"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                {
+                  attrs: {
+                    expanded: "",
+                    label: "Transfer Amount *",
+                    message: _vm.formAmountMessage,
+                    type: _vm.formAmountType
+                  }
+                },
+                [
+                  _c("b-input", {
+                    attrs: {
+                      min: "1",
+                      max: this.balence,
+                      name: "beneficiary_amount",
+                      type: "number",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.form.beneficiary_amount,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "beneficiary_amount", $$v)
+                      },
+                      expression: "form.beneficiary_amount"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                {
+                  attrs: {
+                    expanded: "",
+                    label: "Debtor Comment *",
+                    message: _vm.formCommentMessage,
+                    type: _vm.formCommentType
+                  }
+                },
+                [
+                  _c("b-input", {
+                    attrs: { max: "15", name: "debtor_comment", required: "" },
+                    model: {
+                      value: _vm.form.debtor_comment,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "debtor_comment", $$v)
+                      },
+                      expression: "form.debtor_comment"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "b-field",
-            {
-              attrs: {
-                horizontal: "",
-                label: "E-mail",
-                message: _vm.formEmailMessage,
-                type: _vm.formEmailType
-              }
-            },
+            { attrs: { grouped: "" } },
             [
-              _c("b-input", {
-                attrs: { name: "email", type: "email", required: "" },
-                model: {
-                  value: _vm.form.email,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "email", $$v)
-                  },
-                  expression: "form.email"
-                }
-              })
+              _c(
+                "b-field",
+                {
+                  attrs: {
+                    expanded: "",
+                    label: "Beneficiary Account *",
+                    message: _vm.formBeneficiaryAccountNumberMessage,
+                    type: _vm.formBeneficiaryAccountNumberType
+                  }
+                },
+                [
+                  _c("b-input", {
+                    attrs: {
+                      max: "10",
+                      name: "beneficiary_account_number",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.form.beneficiary_account_number,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "beneficiary_account_number", $$v)
+                      },
+                      expression: "form.beneficiary_account_number"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                {
+                  attrs: {
+                    expanded: "",
+                    label: "Beneficiary Name *",
+                    message: _vm.formBeneficiaryNameMessage,
+                    type: _vm.formBeneficiaryNameType
+                  }
+                },
+                [
+                  _c("b-input", {
+                    attrs: {
+                      max: "15",
+                      name: "beneficiary_name",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.form.beneficiary_name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "beneficiary_name", $$v)
+                      },
+                      expression: "form.beneficiary_name"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                {
+                  attrs: {
+                    expanded: "",
+                    label: "Beneficiary Comment *",
+                    message: _vm.formBeneficiaryCommentMessage,
+                    type: _vm.formBeneficiaryCommentType
+                  }
+                },
+                [
+                  _c("b-input", {
+                    attrs: {
+                      max: "15",
+                      name: "beneficiary_comment",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.form.beneficiary_comment,
+                      callback: function($$v) {
+                        _vm.$set(_vm.form, "beneficiary_comment", $$v)
+                      },
+                      expression: "form.beneficiary_comment"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _c("b-field", { attrs: { horizontal: "" } }, [
+          _c("b-field", { attrs: { expanded: "" } }, [
             _c("div", { staticClass: "control" }, [
               _c(
                 "button",
@@ -984,123 +827,71 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Profile.vue?vue&type=template&id=25b9215a&":
-/*!*****************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Profile.vue?vue&type=template&id=25b9215a& ***!
-  \*****************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("title-bar", { attrs: { "title-stack": _vm.titleStack } }),
-      _vm._v(" "),
-      _c(
-        "hero-bar",
-        [
-          _vm._v("\n    Profile\n    "),
-          _c(
-            "router-link",
-            {
-              staticClass: "button",
-              attrs: { slot: "right", to: "/" },
-              slot: "right"
-            },
-            [_vm._v("\n      Dashboard\n    ")]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "section",
-        { staticClass: "section is-main-section" },
-        [
-          _c(
-            "tiles",
-            [
-              _c("profile-update-form", { staticClass: "tile is-child" }),
-              _vm._v(" "),
-              _c(
-                "card-component",
-                {
-                  staticClass: "tile is-child",
-                  attrs: { title: "Profile", icon: "account" }
-                },
-                [
-                  _c(
-                    "b-field",
-                    { attrs: { label: "Name" } },
-                    [
-                      _c("b-input", {
-                        attrs: {
-                          value: _vm.userName,
-                          "custom-class": "is-static",
-                          readonly: ""
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c(
-                    "b-field",
-                    { attrs: { label: "E-mail" } },
-                    [
-                      _c("b-input", {
-                        attrs: {
-                          value: _vm.userEmail,
-                          "custom-class": "is-static",
-                          readonly: ""
-                        }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("password-update-form")
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./resources/js/auth/PasswordUpdateForm.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/auth/PasswordUpdateForm.vue ***!
-  \**************************************************/
+/***/ "./resources/js/library/transactions/transactions.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/library/transactions/transactions.js ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PasswordUpdateForm_vue_vue_type_template_id_06956081___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PasswordUpdateForm.vue?vue&type=template&id=06956081& */ "./resources/js/auth/PasswordUpdateForm.vue?vue&type=template&id=06956081&");
-/* harmony import */ var _PasswordUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PasswordUpdateForm.vue?vue&type=script&lang=js& */ "./resources/js/auth/PasswordUpdateForm.vue?vue&type=script&lang=js&");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  /**
+   * Own transactions
+   * 
+   * @param {Object} data
+   * @returns {Object}
+   */
+  addOwnTransaction: function addOwnTransaction(data) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('transactions/credit', data);
+  },
+
+  /**
+   * Own transactions logs
+   * 
+   * @returns {Object}
+   */
+  getOwnTransactionLogs: function getOwnTransactionLogs() {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('transactions/credit/logs');
+  },
+
+  /**
+   * Beneficiary transactions
+   * 
+   * @param {Object} data
+   * @returns {Object}
+   */
+  addBeneficiaryTransaction: function addBeneficiaryTransaction(data) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('transactions/beneficiary', data);
+  },
+
+  /**
+   * Own transactions logs
+   * 
+   * @returns {Object}
+   */
+  getBeneficiaryTransactionLogs: function getBeneficiaryTransactionLogs() {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('transactions/debit/logs');
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/views/BeneficiaryTransfers.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/views/BeneficiaryTransfers.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BeneficiaryTransfers_vue_vue_type_template_id_4b9b18a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2& */ "./resources/js/views/BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2&");
+/* harmony import */ var _BeneficiaryTransfers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BeneficiaryTransfers.vue?vue&type=script&lang=js& */ "./resources/js/views/BeneficiaryTransfers.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -1110,9 +901,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _PasswordUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _PasswordUpdateForm_vue_vue_type_template_id_06956081___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _PasswordUpdateForm_vue_vue_type_template_id_06956081___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _BeneficiaryTransfers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BeneficiaryTransfers_vue_vue_type_template_id_4b9b18a2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BeneficiaryTransfers_vue_vue_type_template_id_4b9b18a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1122,55 +913,55 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/auth/PasswordUpdateForm.vue"
+component.options.__file = "resources/js/views/BeneficiaryTransfers.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/auth/PasswordUpdateForm.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/auth/PasswordUpdateForm.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
+/***/ "./resources/js/views/BeneficiaryTransfers.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/views/BeneficiaryTransfers.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordUpdateForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/auth/PasswordUpdateForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryTransfers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./BeneficiaryTransfers.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/BeneficiaryTransfers.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryTransfers_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/auth/PasswordUpdateForm.vue?vue&type=template&id=06956081&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/auth/PasswordUpdateForm.vue?vue&type=template&id=06956081& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/views/BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/views/BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2& ***!
+  \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordUpdateForm_vue_vue_type_template_id_06956081___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PasswordUpdateForm.vue?vue&type=template&id=06956081& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/auth/PasswordUpdateForm.vue?vue&type=template&id=06956081&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordUpdateForm_vue_vue_type_template_id_06956081___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryTransfers_vue_vue_type_template_id_4b9b18a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/BeneficiaryTransfers.vue?vue&type=template&id=4b9b18a2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryTransfers_vue_vue_type_template_id_4b9b18a2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PasswordUpdateForm_vue_vue_type_template_id_06956081___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryTransfers_vue_vue_type_template_id_4b9b18a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/FilePicker.vue":
-/*!************************************************!*\
-  !*** ./resources/js/components/FilePicker.vue ***!
-  \************************************************/
+/***/ "./resources/js/views/forms/BeneficiaryDepositForm.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/views/forms/BeneficiaryDepositForm.vue ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _FilePicker_vue_vue_type_template_id_7d05e4d5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FilePicker.vue?vue&type=template&id=7d05e4d5& */ "./resources/js/components/FilePicker.vue?vue&type=template&id=7d05e4d5&");
-/* harmony import */ var _FilePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FilePicker.vue?vue&type=script&lang=js& */ "./resources/js/components/FilePicker.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _BeneficiaryDepositForm_vue_vue_type_template_id_0d94365c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c& */ "./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c&");
+/* harmony import */ var _BeneficiaryDepositForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BeneficiaryDepositForm.vue?vue&type=script&lang=js& */ "./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -1179,9 +970,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _FilePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _FilePicker_vue_vue_type_template_id_7d05e4d5___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _FilePicker_vue_vue_type_template_id_7d05e4d5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _BeneficiaryDepositForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BeneficiaryDepositForm_vue_vue_type_template_id_0d94365c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BeneficiaryDepositForm_vue_vue_type_template_id_0d94365c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -1191,176 +982,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/FilePicker.vue"
+component.options.__file = "resources/js/views/forms/BeneficiaryDepositForm.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/FilePicker.vue?vue&type=script&lang=js&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/FilePicker.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FilePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FilePicker.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilePicker.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FilePicker_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/FilePicker.vue?vue&type=template&id=7d05e4d5&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/FilePicker.vue?vue&type=template&id=7d05e4d5& ***!
-  \*******************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilePicker_vue_vue_type_template_id_7d05e4d5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FilePicker.vue?vue&type=template&id=7d05e4d5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FilePicker.vue?vue&type=template&id=7d05e4d5&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilePicker_vue_vue_type_template_id_7d05e4d5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilePicker_vue_vue_type_template_id_7d05e4d5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/ProfileUpdateForm.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/ProfileUpdateForm.vue ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ProfileUpdateForm_vue_vue_type_template_id_5aad544a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileUpdateForm.vue?vue&type=template&id=5aad544a& */ "./resources/js/components/ProfileUpdateForm.vue?vue&type=template&id=5aad544a&");
-/* harmony import */ var _ProfileUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileUpdateForm.vue?vue&type=script&lang=js& */ "./resources/js/components/ProfileUpdateForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ProfileUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ProfileUpdateForm_vue_vue_type_template_id_5aad544a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ProfileUpdateForm_vue_vue_type_template_id_5aad544a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ProfileUpdateForm.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ProfileUpdateForm.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/ProfileUpdateForm.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileUpdateForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileUpdateForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileUpdateForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ProfileUpdateForm.vue?vue&type=template&id=5aad544a&":
+/***/ "./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************!*\
-  !*** ./resources/js/components/ProfileUpdateForm.vue?vue&type=template&id=5aad544a& ***!
+  !*** ./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileUpdateForm_vue_vue_type_template_id_5aad544a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileUpdateForm.vue?vue&type=template&id=5aad544a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileUpdateForm.vue?vue&type=template&id=5aad544a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileUpdateForm_vue_vue_type_template_id_5aad544a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileUpdateForm_vue_vue_type_template_id_5aad544a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/views/Profile.vue":
-/*!****************************************!*\
-  !*** ./resources/js/views/Profile.vue ***!
-  \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Profile.vue?vue&type=template&id=25b9215a& */ "./resources/js/views/Profile.vue?vue&type=template&id=25b9215a&");
-/* harmony import */ var _Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Profile.vue?vue&type=script&lang=js& */ "./resources/js/views/Profile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/views/Profile.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryDepositForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./BeneficiaryDepositForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryDepositForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/views/Profile.vue?vue&type=script&lang=js&":
-/*!*****************************************************************!*\
-  !*** ./resources/js/views/Profile.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Profile.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Profile.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/views/Profile.vue?vue&type=template&id=25b9215a&":
-/*!***********************************************************************!*\
-  !*** ./resources/js/views/Profile.vue?vue&type=template&id=25b9215a& ***!
-  \***********************************************************************/
+/***/ "./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c& ***!
+  \********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Profile.vue?vue&type=template&id=25b9215a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Profile.vue?vue&type=template&id=25b9215a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryDepositForm_vue_vue_type_template_id_0d94365c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/forms/BeneficiaryDepositForm.vue?vue&type=template&id=0d94365c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryDepositForm_vue_vue_type_template_id_0d94365c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_25b9215a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BeneficiaryDepositForm_vue_vue_type_template_id_0d94365c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

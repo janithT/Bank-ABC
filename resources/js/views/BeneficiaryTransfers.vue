@@ -1,8 +1,11 @@
 <template>
   <section class="section is-main-section">
+
+    <!-- Beneficiary deposit form component -->
     <beneficiary-deposit-form  @transaction-completed="getBeneficiaryTransactions" class="tile is-child"/>
  
     <card-component title="Debit History" icon="account" class="tile is-child">
+      <!-- Start deposit history table -->
       <b-table 
         :data="transactions" 
         :per-page="perPage" 
@@ -29,6 +32,7 @@
             </div>
           </section>
       </b-table>
+      <!-- End deposit history table -->
     </card-component>
 </section>
 

@@ -1,5 +1,7 @@
 <template>
   <card-component title="Deposits" icon="account-circle">
+
+    <!-- Start deposits user form -->
     <form @submit.prevent="submit">
       <b-field grouped>
         <b-field expanded label="Your Account *" :message="formAccountNumberMessage" :type="formAccountNumberType">
@@ -22,6 +24,8 @@
         </div>
       </b-field>
     </form>
+    <!-- End deposits user form -->
+
   </card-component>
 </template>
 
@@ -86,7 +90,10 @@ export default {
       };
     },
 
-    // form submit for own transfer
+    /**
+     * Submit for own transfer.
+     * 
+     */ 
     submit() {
       this.isLoading = true;
       this.errors = {};

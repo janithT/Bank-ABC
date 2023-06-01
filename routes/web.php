@@ -31,6 +31,7 @@ Route::get('api/documentation', '\L5Swagger\Http\Controllers\SwaggerController@a
                 Route::patch('/password', 'CurrentUserController@updatePassword');
             });
 
+            // User transaction auth routes
             Route::prefix('/transactions')->group(function () {
                 Route::get('', 'TransactionController@index');
                 Route::post('/credit', 'TransactionController@ownTransfer');

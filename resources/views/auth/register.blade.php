@@ -74,11 +74,11 @@
                 <hr>
 
                 <div class="field is-form-action-buttons">
-                    <button type="submit" class="button is-black"  >
+                    <button type="submit" class="button is-link is-outlined"  >
                         {{ __('Register') }}
                     </button>
 
-                    <a class="button is-black is-outlined" href="{{ route('login') }}">
+                    <a class="button is-link is-outlined" href="{{ route('login') }}">
                         {{ __('Login') }}
                     </a>
                 </div>
